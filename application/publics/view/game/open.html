@@ -1,0 +1,132 @@
+{extend name="public:body" /}
+
+{block name="header"}
+  <div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title" style="padding:10px 0;height:30px;">
+      <li class="layui-this"><a href="{:url('admin/index')}">开奖信息</a></li>
+    </ul>
+  </div>
+{/block}
+{block name="body"}
+  <div class="layui-card-body">
+    <div class="layui-form">
+      <div class="layui-form-item">
+        <span style="margin-right: 15px">当前期数：{$issue}</span>
+        <a class="a-post layui-btn" onClick="onSetNumber()">手动开奖</a>
+        {if (!empty($draw_numbers))}
+        <span style="margin-left: 15px; color: red">
+          当前设置开奖号码：
+          {$draw_numbers['num1'] ?? '-'},
+          {$draw_numbers['num2'] ?? '-'},
+          {$draw_numbers['num3'] ?? '-'},
+          {$draw_numbers['num4'] ?? '-'},
+          {$draw_numbers['num5'] ?? '-'},
+          {$draw_numbers['num6'] ?? '-'}
+          ---
+          {$draw_numbers['num'] ?? '-'}
+        </span>
+        {/if}
+      </div>
+    </div>
+
+    <table class="layui-table table table-hover table-bordered table-list" id="menus-table" lay-size="sm">
+      <thead>
+        <tr>
+          <th class="tc">ID</th>
+          <th class="tc">开奖期数</th>
+          <th class="tc">开奖号码</th>
+          <th class="tc">全部开奖时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($list as $v){?>
+          <tr>
+            <td class="tc">{$v.id}</td>
+            <td class="tc">{$v.issue}</td>
+            <td class="tc">
+              {$v.num1 ?? '*'},{$v.num2 ?? '*'},{$v.num3 ?? '*'},{$v.num4 ?? '*'},{$v.num5 ?? '*'},{$v.num6 ?? '*'} -
+              <span style="color: red">{$v.num ?? '*'}</span>
+            </td>
+            <td class="tc">{$v.update_time}</td>
+          </tr>
+        <?php } ?>
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td colspan="9" class="tc">
+            {$page|raw}
+            <span>共{$count}条</span>
+            <span>
+              {$limit|raw}
+            </span>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <script>
+    var url   = "/publics/game/info",
+        limit = 10
+
+    // 页面选择
+    var selectlimit = function() {
+      limit = $('[name=limit]').val()
+      window.location.href = url + "?page={$cur_page}&limit="+limit
+    }
+
+    // 预设号码
+    function onSetNumber() {
+      layer.open({
+        type: 2,
+        title: '预设号码',
+        offset: '150px',
+        area: ['350px', '502px'],
+        content: '{:url("game/setnumber")}',
+        btn: ['确认', '取消'],
+        yes: function(index, layero) {
+          const body = layer.getChildFrame('body', index);
+          const iframeWin = window[layero.find('iframe')[0]['name']];
+          const data = {
+            issue: '{$issue}',
+            num1: body.find('[name=num1]').val(),
+            num2: body.find('[name=num2]').val(),
+            num3: body.find('[name=num3]').val(),
+            num4: body.find('[name=num4]').val(),
+            num5: body.find('[name=num5]').val(),
+            num6: body.find('[name=num6]').val(),
+            num: body.find('[name=num]').val(),
+          };
+          handleSubmit(data);
+          layer.close(index);
+        },
+      });
+    }
+
+    // 搜索参数
+    var parmas = function() {
+      var obj = {
+        limit: $('[name=limit]').val(),
+      }
+
+      var string = ''
+      for (let k in obj) {
+        if (obj[k] !== undefined) {
+          string += k+'='+obj[k]+'&'
+        }
+      }
+      return string.substr(0, string.length - 1)
+    }
+
+    function handleSubmit(data) {
+      $.post('{:url("game/setnumber")}', data, function(json) {
+        if (json.code === 200) {
+          window.location.reload();
+        } else {
+          layer.msg(json.msg);
+        }
+      });
+    }
+  </script>
+{/block}

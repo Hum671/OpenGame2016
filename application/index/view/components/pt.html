@@ -1,0 +1,15 @@
+<div class="box pad">
+  <table class="ptyx" width="100%" border="1">
+    <tbody>
+      <tr>
+        <th>平特一肖</th>
+      </tr>
+      {volist name="one_animal_sign_list" id="vo"}
+        <tr>
+          <td class="td" align="center">
+            <p align="left">{$vo.issue}期:平特一肖<font color="#FF0000">【{$vo.animal_sign}】</font>开:<font color="#0000FF">{$vo.result_animal_sign ?? '?'}{$vo.result ?? '00'}</font><font color="#FF0000">{if $vo.result_animal_sign === $vo.animal_sign || empty($vo.result)}准{else /}错{/if}</font></p></td>
+        </tr>
+      {/volist}
+    </tbody>
+  </table>
+</div>

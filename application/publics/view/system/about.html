@@ -1,0 +1,77 @@
+{extend name="public:body" /}
+
+{block name="header"}
+  <div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title" style="padding:10px 0;height:30px;">
+      {if checkPath('system/general')}
+      <li><a href="{:url('system/general')}">常规设置</a></li>
+      {/if}
+      <li class="layui-this"><a href="{:url('system/about')}">关于我们</a></li>
+      {if checkPath('system/contract')}
+      <li><a href="{:url('system/contract')}">合同模版</a></li>
+      {/if}
+    </ul>
+  </div>
+{/block}
+{block name="body"}
+<div class="layui-card-body">
+  <form class="form-horizontal" action="{:url('about')}" method="post">
+    <table class="layui-table table-form" id="menus-table" lay-size="sm">
+      <tbody>
+        <tr>
+          <td>
+            <textarea lay-verify="content" name="about_us" id="aboutUs" style="display: none;">{$about_us ?? ''}</textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">
+            <button onclick="onPost()" type="button" class="layui-btn btn-primary layui-btn-sm on-post">
+              保存
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+
+<script>
+var index, layedit
+layui.use('layedit', function() {
+  layedit = layui.layedit
+
+  layedit.set({
+    uploadImage: {
+      url: "{:url('/publics/upload')}"
+    }
+  })
+
+  index = layedit.build('aboutUs', {
+    height: 520
+  })
+})
+
+var onPost = function() {
+  $.post("{:url('about')}", { about_us: layedit.getContent(index) }, function(json) {
+    if(json.code == 200  || json.code == 1){
+      if (json.code === 1) {
+        json.url = '/publics/customer/group'
+      }
+      layer.msg(json.msg, { time: 1000, icon: 6, offset: '33%' })
+    }else if(json.code == 0){
+      layer.msg(json.msg, { time: 1500, icon: 5, offset: '33%' })
+    }
+  })
+}
+
+//按钮禁止
+$(".on-post").on("click",
+  function() {
+    var b = $(this);
+    b.button("loading"),
+      setTimeout(function() {
+        b.button("reset");
+      },1e3)
+})
+</script>
+{/block}

@@ -1,0 +1,128 @@
+<style>
+	.ls-title {
+		height: 48px;
+		background: rgb(0, 104, 183);
+		color: #fff100;
+		line-height: 48px;
+		text-align: center;
+		font-size: 18px;
+	}
+	.ls-list {
+		border: 1px solid #ddd;
+		width: calc(100% - 20px);
+		margin: 10px auto;
+		padding: 10px 0;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+	.ls-item {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+	.ls-label {
+		width: 80px;
+		text-align: right;
+		color: #d80011;
+		font-weight: 700;
+	}
+	.ls-value {
+		display: flex;
+		align-items: center;
+		color: rgb(126, 124, 124);
+		font-size: 16px;
+		font-weight: 700;
+	}
+	.ls-zh {
+		display: inline-block;
+		font-style: normal;
+		border-radius: 8px;
+		padding: 0 7px;
+		color: #fff;
+		background: #d21e1e;
+		font-size: 8px;
+		text-align: center;
+		height: 16px;
+		line-height: 16px;
+		cursor: pointer;
+		margin-left: 5px;
+	}
+	.ball-blue {
+		background: url(/static/imgs/ball-blue.png) top center no-repeat;
+		background-size: contain;
+	}
+	.ball-red {
+		background: url(/static/imgs/ball-red.png) top center no-repeat;
+		background-size: contain;
+	}
+	.ball-green {
+		background: url(/static/imgs/ball-green.png) top center no-repeat;
+		background-size: contain;
+	}
+	.ls-kaijiang-list {
+		display: flex;
+		gap: 5px;
+		align-items: center;
+		justify-content: center;
+	}
+	.ls-ball {
+		width: 35px;
+		height: 35px;
+		text-align: center;
+		line-height: 35px;
+		color: black;
+	}
+	.ls-ball-dd {
+		text-align: center;
+		color: black;
+	}
+	.ls-kj-jia {
+		color: red;
+		font-size: 24px;
+	}
+</style>
+
+<div class="ls-title">官方版</div>
+
+{foreach $list as $vo}
+<div class="ls-list">
+	<div class="ls-item">
+		<div class="ls-label">期号</div>
+		<div class="ls-value">
+			<div>第{$vo.issue}期</div>
+			<div class="ls-zh">直播</div>
+		</div>
+	</div>
+
+	<div class="ls-item">
+		<div class="ls-label">開獎時間</div>
+		<div class="ls-value">
+			<div>{$vo.date.date} 22:33</div>
+		</div>
+	</div>
+
+	<div class="ls-item">
+		<div class="ls-label">中獎號碼</div>
+		<div class="ls-value">
+			<div class="ls-kajiang">
+					<div class="kj-box">
+						<ul class="clearfix ls-kaijiang-list">
+							{for start="1" end="8"}
+							{if $i === 7}
+							<li class="ls-kj-jia">+</li>
+							{/if}
+							<li>
+								<dl>
+									<dt class="ls-ball ball-{$vo[$nums[$i - 1].'_color']}">{$vo[$nums[$i - 1]]}</dt>
+									<dd class="ls-ball-dd">{$vo[$nums[$i - 1].'_animal_sign']}</dd>
+								</dl>
+							</li>
+							{/for}
+						</ul>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>
+{/foreach}

@@ -1,0 +1,22 @@
+<div class="box pad">
+  <table class="bzlx" width="100%" border="1">
+		<tbody>
+		<tr>
+			<th width="372">期数</th>
+			<th>必中六尾</th>
+			<th>结果</th>
+		</tr>
+		{volist name="six_tail_number_list" id="vo"}
+			<tr>
+				<td class="td1" width="372" height="23">{$vo.issue}期</td>
+				<td class="td2" height="23">
+					<span class="STYLE1">{foreach $vo.num_list as $index => $item}{if isset(str_split($vo.result)[1]) && $item == str_split($vo.result)[1]}<font color="#FF0000"><span style="background-color: #FFFF00">{$item}</span></font>{else /}{$item}{/if}{if count($vo.num_list) - 1 > $index}-{/if}{/foreach}</span>
+				</td>
+				<td class="td3" height="23">
+					{$vo.result_animal_sign ?? '?'}{$vo.result ?? '00'}
+				</td>
+			</tr>
+		{/volist}
+		</tbody>
+	</table>
+</div>

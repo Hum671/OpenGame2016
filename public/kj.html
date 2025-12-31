@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <meta name='viewport'
+        content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'>
+    <meta name='applicable-device' content='mobile'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <script type="text/javascript" src="./jq.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section {
+            display: block;
+        }
+
+        ol,
+        ul {
+            list-style: none;
+        }
+
+        img {
+            border: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        body {
+            line-height: 20px;
+            font-size: 16px;
+            font-family: "Lantinghei SC", "Microsoft Yahei", Helvetica, Arial;
+            color: #333;
+        }
+
+        html {
+            color: #333;
+            font-size: 1em;
+            line-height: 1.5;
+            background: #fff;
+        }
+
+        .clearfix:after {
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            overflow: hidden;
+            visibility: hidden;
+        }
+
+        .clearfix {
+            *zoom: 1;
+        }
+
+        .clear {
+            clear: both;
+            width: 0px;
+            height: 0px;
+            font-size: 0px;
+            overflow: hidden;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        header,
+        nav,
+        a,
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            vertical-align: baseline;
+        }
+
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section {
+            display: block;
+        }
+
+        body {
+            -webkit-text-size-adjust: 100%;
+        }
+
+        ol,
+        ul {
+            list-style: none;
+        }
+
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .kj-tit {
+            height: 30px;
+            line-height: 30px;
+            text-align: left;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .kj-tit span {
+            color: #ff0000;
+            font-size: 14px;
+        }
+
+        .kj-box {
+            padding: 5px 0;
+            background: #f8f8f8;
+        }
+
+        .kj-box th,
+        .kj-box td {
+            text-align: center;
+            background: #fff;
+        }
+
+        .kj-box th {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .kj-box th.blue {
+            background: #0000ff;
+        }
+
+        .kj-box th.green {
+            background: #009900;
+        }
+
+        .kj-box th.red {
+            background: #ff0000;
+        }
+
+        .kj-l {
+            float: left;
+            width: 83%;
+        }
+
+        .kj-r {
+            float: right;
+            width: 15%;
+        }
+
+        .s1_content_title a {
+            display: inline-block;
+            padding: 0.01rem 0.05rem;
+            border-radius: 5px;
+            background: #e54f27;
+            color: #fff;
+            text-decoration: none;
+            line-height: 0.5rem;
+            font-size: 0.08rem;
+        }
+
+        .kj-function-btn {
+            height: 30px;
+            line-height: 30px;
+            font-size: 12px;
+        }
+
+        .kj-border {
+            margin: 0 2px;
+            border-radius: 10px;
+        }
+
+        .num {
+            height: 30px;
+            line-height: 30px;
+            font-size: 16px;
+        }
+
+        .txt {
+            height: 20px;
+            line-height: 10px;
+            font-size: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        #q,
+        #nextQiShu {
+            color: red;
+        }
+
+        .kj-lotto {
+            padding: 0;
+            box-sizing: border-box;
+            color: #000;
+            font-size: 16px;
+            text-align: center;
+            font-family: Arial, 'å¾®è½¯é›…é»‘';
+        }
+
+        .kj-lotto a {
+            text-decoration: none;
+        }
+
+        .kj-lotto ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .kj-lotto ul li {
+            list-style: none;
+        }
+
+        .kj-lotto .kj-lotto-tit {
+            height: 46px;
+            line-height: 46px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .kj-lotto .kj-lotto-tit1 {}
+
+        .kj-lotto .kj-lotto-tit2 {}
+
+        .kj-lotto .kj-lotto-tit2 a {
+            color: #f00;
+        }
+
+        .kj-lotto .kj-lotto-box {}
+
+        .kj-lotto .kj-lotto-box ul {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .kj-lotto .kj-lotto-box ul li {
+            width: 13%;
+            height: 115px;
+            padding-top: 12px;
+            border: solid 1px #ddd;
+            box-sizing: border-box;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+            background: linear-gradient(to top, #eee, #fff);
+        }
+
+        .kj-lotto .kj-lotto-box ul li span {
+            width: 61px;
+            height: 61px;
+            line-height: 61px;
+            font-size: 24px;
+            font-weight: bold;
+            display: inline-block;
+            background-size: 100% 100% !important;
+        }
+
+        .kj-lotto .kj-lotto-box ul li.kj-lotto-red:last-child {
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.58);
+            border-color: red;
+        }
+
+        .kj-lotto .kj-lotto-box ul li.kj-lotto-blue:last-child {
+            box-shadow: 0 0 10px rgb(0, 160, 233);
+            border-color: #00a0e9;
+        }
+
+        .kj-lotto .kj-lotto-box ul li.kj-lotto-green:last-child {
+            box-shadow: 0 0 10px rgba(0, 128, 0, 0.58);
+            border-color: green;
+        }
+
+        .kj-lotto .kj-lotto-box ul li.kj-lotto-red span {
+            background: url('./imgs/red.png') 0 0 no-repeat;
+        }
+
+        .kj-lotto .kj-lotto-box ul li.kj-lotto-blue span {
+            background: url('./imgs/blue.png') 0 0 no-repeat;
+        }
+
+        .kj-lotto .kj-lotto-box ul li.kj-lotto-green span {
+            background: url('./imgs/green.png') 0 0 no-repeat;
+        }
+
+        .kj-lotto .kj-lotto-box ul li:last-child {
+            margin-left: 10px;
+        }
+
+        .kj-lotto .kj-lotto-box ul li em {
+            display: block;
+            line-height: 1;
+            margin-top: 10px;
+            font-style: normal;
+        }
+
+        .kj-lotto .kj-lotto-box {}
+
+        .kj-lotto .kj-lotto-foot {
+            height: 46px;
+            line-height: 46px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .kj-lotto .kj-lotto-foot1 {}
+
+        .kj-lotto .kj-lotto-foot2 {}
+
+        .kj-lotto .kj-lotto-foot2 a {
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            color: #fff;
+            border-radius: 30px;
+            display: inline-block;
+            background: linear-gradient(to top, #c10000, #f00);
+            text-decoration: none;
+        }
+
+        @media screen and (max-width:800px) {
+            .kj-lotto {
+                font-size: 15px;
+            }
+
+            .kj-lotto .kj-lotto-tit {
+                height: 40px;
+                line-height: 40px;
+            }
+
+            .kj-lotto .kj-lotto-box ul li {
+                height: 100px;
+                padding-top: 10px;
+                border-radius: 8px;
+                box-shadow: 0 0 6px rgba(0, 0, 0, .1);
+            }
+
+            .kj-lotto .kj-lotto-box ul li span {
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+                font-size: 20px;
+            }
+
+            .kj-lotto .kj-lotto-box ul li em {
+                margin-top: 10px;
+            }
+
+            .kj-lotto .kj-lotto-foot {
+                height: 40px;
+                line-height: 40px;
+            }
+
+            .kj-lotto .kj-lotto-foot2 a {
+                width: 70px;
+                height: 26px;
+                line-height: 26px;
+            }
+        }
+
+        @media screen and (max-width:650px) {
+            .kj-lotto {
+                font-size: 14px;
+            }
+
+            .kj-lotto .kj-lotto-tit {
+                height: 36px;
+                line-height: 36px;
+            }
+
+            .kj-lotto .kj-lotto-box ul li {
+                height: 90px;
+                padding-top: 10px;
+                border-radius: 6px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+            }
+
+            .kj-lotto .kj-lotto-box ul li em {
+                margin-top: 10px;
+            }
+
+            .kj-lotto .kj-lotto-box ul li span {
+                width: 44px;
+                height: 44px;
+                line-height: 44px;
+                font-size: 18px;
+            }
+
+            .kj-lotto .kj-lotto-foot {
+                height: 36px;
+                line-height: 36px;
+            }
+
+            .kj-lotto .kj-lotto-foot2 a {
+                width: 66px;
+                height: 24px;
+                line-height: 24px;
+            }
+        }
+
+        @media screen and (max-width:500px) {
+            .kj-lotto {
+                font-size: 13px;
+            }
+
+            .kj-lotto .kj-lotto-tit {
+                height: 32px;
+                line-height: 32px;
+            }
+
+            .kj-lotto .kj-lotto-box ul li {
+                height: 76px;
+                padding-top: 7px;
+                border-radius: 6px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+            }
+
+            .kj-lotto .kj-lotto-box ul li span {
+                width: 36px;
+                height: 36px;
+                line-height: 36px;
+                font-size: 16px;
+            }
+
+            .kj-lotto .kj-lotto-box ul li em {
+                margin-top: 8px;
+            }
+
+            .kj-lotto .kj-lotto-foot {
+                height: 32px;
+                line-height: 32px;
+            }
+
+            .kj-lotto .kj-lotto-foot2 a {
+                width: 60px;
+                height: 22px;
+                line-height: 22px;
+            }
+        }
+
+        @media screen and (max-width:450px) {
+            .kj-lotto {
+                font-size: 12px;
+            }
+
+            .kj-lotto .kj-lotto-tit {
+                height: 32px;
+                line-height: 32px;
+            }
+
+            .kj-lotto .kj-lotto-box ul li {
+                height: 70px;
+                padding-top: 7px;
+                border-radius: 6px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+            }
+
+            .kj-lotto .kj-lotto-box ul li span {
+                width: 32px;
+                height: 32px;
+                line-height: 32px;
+                font-size: 14px;
+            }
+
+            .kj-lotto .kj-lotto-box ul li em {
+                margin-top: 8px;
+            }
+
+            .kj-lotto .kj-lotto-foot {
+                height: 32px;
+                line-height: 32px;
+            }
+
+            .kj-lotto .kj-lotto-foot2 a {
+                width: 50px;
+                height: 20px;
+                line-height: 20px;
+            }
+        }
+
+        @media screen and (max-width:400px) {
+            .kj-lotto {
+                font-size: 12px;
+            }
+
+            .kj-lotto .kj-lotto-tit {
+                height: 30px;
+                line-height: 30px;
+            }
+
+            .kj-lotto .kj-lotto-box ul li {
+                height: 64px;
+                padding-top: 6px;
+                border-radius: 6px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+            }
+
+            .kj-lotto .kj-lotto-box ul li span {
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 13px;
+            }
+
+            .kj-lotto .kj-lotto-box ul li em {
+                margin-top: 5px;
+            }
+
+            .kj-lotto .kj-lotto-foot {
+                height: 30px;
+                line-height: 30px;
+            }
+
+            .kj-lotto .kj-lotto-foot2 a {
+                width: 46px;
+                height: 20px;
+                line-height: 20px;
+            }
+        }
+
+        @media screen and (max-width:350px) {
+            .kj-lotto {
+                font-size: 12px;
+            }
+
+            .kj-lotto .kj-lotto-tit {
+                height: 30px;
+                line-height: 30px;
+            }
+
+            .kj-lotto .kj-lotto-box ul li {
+                height: 60px;
+                padding-top: 6px;
+                border-radius: 6px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+            }
+
+            .kj-lotto .kj-lotto-box ul li span {
+                width: 28px;
+                height: 28px;
+                line-height: 28px;
+                font-size: 12px;
+            }
+
+            .kj-lotto .kj-lotto-box ul li em {
+                margin-top: 5px;
+            }
+
+            .kj-lotto .kj-lotto-foot {
+                height: 30px;
+                line-height: 30px;
+            }
+
+            .kj-lotto .kj-lotto-foot2 a {
+                width: 46px;
+                height: 20px;
+                line-height: 20px;
+            }
+        }
+
+        .alertBox {
+            border: 1px solid #B1B1B1;
+            position: absolute;
+            bottom: 0px;
+            width: 200px;
+            left: 50%;
+            margin-left: -100px;
+            background-color: crimson;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            display: none;
+            line-height: 1.4rem;
+            font-size: .9rem;
+        }
+    </style>
+    <style>
+        .grey {
+            background-color: grey;
+            color: white;
+        }
+
+        .red {
+            background-color: red;
+            color: white;
+        }
+
+        .blue {
+            background-color: blue;
+            color: white;
+        }
+
+        .green {
+            background-color: green;
+            color: white;
+        }
+
+        #id-body {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="id-body" class="cgi-body">
+        <div class="kj-tit">第 <font color="#ff0000"><span id="periods">
+                    -</span>期</font> 开奖结果
+            <span class="kj-function-btn" style="float: right">
+                『<a target="_blank" style="text-decoration: none"
+                    href="https://sr332.com/index/index/history.html">历史记录</a>』
+            </span>
+            <span class="kj-function-btn" style="float: right">
+                『<a target="_blank" style="text-decoration: none"
+                    href="/">开奖直播</a>』
+            </span>
+        </div>
+        <div class="kj-lotto">
+            <div class="kj-lotto-box">
+                <ul>
+                    <li id="kj1">
+                        <span id="w1">
+                            <lable id="m1">-</lable>
+                        </span>
+                        <em>
+                            <lable id="m1x">-</lable>
+                        </em>
+                    </li>
+                    <li id="kj2">
+                        <span id="w2">
+                            <lable id="m2">-</lable>
+                        </span>
+                        <em>
+                            <lable id="m2x">-</lable>
+                        </em>
+                    </li>
+                    <li id="kj3">
+                        <span id="w3">
+                            <lable id="m3">-</lable>
+                        </span>
+                        <em>
+                            <lable id="m3x">-</lable>
+                        </em>
+                    </li>
+                    <li id="kj4">
+                        <span id="w4">
+                            <lable id="m4">-</lable>
+                        </span>
+                        <em>
+                            <lable id="m4x">-</lable>
+                        </em>
+                    </li>
+                    <li id="kj5">
+                        <span id="w5">
+                            <lable id="m5">-</lable>
+                        </span>
+                        <em>
+                            <lable id="m5x">-</lable>
+                        </em>
+                    </li>
+                    <li id="kj6">
+                        <span id="w6">
+                            <lable id="m6">-</lable>
+                        </span>
+                        <em>
+                            <lable id="m6x">-</lable>
+                        </em>
+                    </li>
+                    <li id="kj7">
+                        <span id="w7">
+                            <lable id="m7">-</lable>
+                        </span>
+                        <em>
+                            <lable id="m7x">-</lable>
+                        </em>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <span class="kj-function-btn" style="margin-right:10px;float:right;">
+            <a href="#" style="text-decoration: none;" onclick="location.reload();return false;"><span class="status"
+                    id="status">刷新</span></a>
+        </span>
+        <div class="kj-tit">
+            第
+            <span id="nextperiods">-</span>
+            期开奖
+            <span id="nexttime">
+                倒计时：<span id="daojishi"></span>
+            </span>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            let isOpen = false
+            let timer
+
+            kjRequst()
+
+            countdown()
+            timer = setInterval(function() {
+                countdown()
+            }, 1000)
+
+            function kjRequst() {
+                $.get('http://103.140.154.49/index/index/game_json', function(r) {
+                // $.get('https://b.huymgjsu666.cc/index/index/game_json', function(r) {
+                    console.log(r)
+                    if (r) {
+                        console.log('successs')
+                        $('#id-body').css('display', 'block')
+
+                        // 获取时间
+                        const date = new Date()
+                        const year = date.getFullYear()
+
+                        // 期号
+                        $('#periods').text(r.current_issue - year * 1000)
+                        $('#nextperiods').text(r.next_issue - year * 1000)
+
+                        for (let i = 1; i <= 7; i++) {
+                            let index = i
+                            if (i === 7) {
+                                index = ''
+                            }
+
+                            $('#kj' + i).removeClass()
+                            $('#kj' + i).addClass('kj-lotto-' + r.result['num'+ index +'_color'])
+
+                            $('#m' + i).text(r.result['num' + index])
+                            $('#m' + i + 'x').text(r.result['num' + index + '_animal_sign'])
+                        }
+
+                        if (r.current_issue == r.next_issue) {
+                            $('#daojishi').text('本期开奖完成')
+                        }
+                    }
+                })
+            }
+
+            function countdown() {
+                // 获取时间
+                const date = new Date()
+                const hours = date.getHours()
+                const minutes = date.getMinutes()
+                const seconds = date.getSeconds()
+
+                const currentTimestamp = new Date().getTime()
+                const today = new Date()
+                today.setHours(22, 30, 0, 0)
+                const drawTimestamp =  today.getTime()
+                let time = drawTimestamp - currentTimestamp
+                let count = 0
+                const openH = 22
+                const openM = 31
+
+                if (hours < openH || (hours == openH && minutes < openM)) {
+                    const hShow = Math.floor(time / 1000 / 60 / 60 % 24);
+                    const mShow = Math.floor(time / 1000 / 60 % 60);
+                    const sShow = Math.floor(time / 1000 % 60);
+
+                    $('#daojishi').text(`${hShow}:${mShow}:${sShow}`)
+                    return
+                }
+                
+                console.log(minutes, openM)
+                const kaijjiang_text = ['与', '官', '方', '同', '步', '中', '...'];
+                if (minutes >= openM && minutes < openM + 1) { // 开奖中
+                    for (let i = 1; i <= 7; i++) {
+                        $('#kj' + i).removeClass()
+                        $('#kj' + i).addClass('kj-lotto-red')
+                        $('#m' + i).text('-')
+                        $('#m' + i + 'x').text(kaijjiang_text[i - 1])
+                    }
+
+                    $('#daojishi').text('开奖中')
+                    return
+                }
+
+                // 已经开奖
+                timer && clearInterval(timer)
+                kjRequst()
+            }
+        })
+    </script>
+</body>
+</html>

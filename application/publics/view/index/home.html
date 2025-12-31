@@ -1,0 +1,158 @@
+{include file="public:head" /}
+
+<style>
+  .user tr td {
+	text-align: center;
+  }
+  .user tr td:nth-child(1) {
+	width: 60px;
+  }
+  .layui-col-md4 {
+	padding: 25px 0;
+	color: #999;
+	border-radius: 2px;
+	transition: all 0.3s;
+	text-align: center;
+  }
+  .layui-col-md4 h3 {
+	font-size: 14px;
+  }
+  .layui-col-md4 p  {
+	font-size: 24px;
+	color: #009688;
+	margin-top: 5px;
+	cursor:pointer;
+	border:none;
+	text-align: center;
+  }
+  .layui-col-md4 input{
+	font-size: 24px;
+	color: #009688;
+	margin-top: 5px;
+	cursor:pointer;
+	border:none;
+	text-align: center;
+  }
+</style>
+
+<div class="layui-fluid"  id="home">
+  <div class="layui-row layui-col-space14">
+	<!-- 服务器信息 -->
+	<div class="layui-col-sm12">
+	  <div class="layui-card">
+		<div class="layui-card-header">系统信息</div>
+		<div class="layui-card-body">
+		  <div class="layui-row layui-col-space12">
+			<div class="layui-col-md4">
+				<h3>信息</h3>
+				<form action=""><input autocomplete="off" class="layui-input listOrder" value="" name="order"></form>
+			</div>
+			<div class="layui-col-md4">
+			  <h3>统计</h3>
+			  <p></p>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<!-- 站点统计 -->
+	<div class="layui-col-sm12">
+	  <div class="layui-card">
+		<div class="layui-card-header">站点统计</div>
+		<div class="layui-card-body">
+		  <div class="layui-row layui-col-space12">
+			<div class="layui-col-md4">
+				<h3>站点超时</h3>
+				<p id="parentIframe"></p>
+			</div>
+			<div class="layui-col-md4">
+				<h3>站点内存</h3>
+				<p id="parentIframe"></p>
+			</div>
+			<div class="layui-col-md4">
+				<h3>站点信息</h3>
+				<p id="parentIframe"></p>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+</div>
+
+<script>
+  layui.use('form', function() {
+	var form = layui.form
+	var status = parseInt("")
+
+	form.val('tabledata', {
+	  'status': status
+	})
+
+	form.on('switch(onoff)', function(data) {
+	  var status = data.elem.checked ? 1 : 0
+
+	  layer.load()
+	  $.post("{:url('update')}", { status: status }, function(res) {
+		layer.closeAll()
+		if (res.code !== 0) {
+		  layer.msg('切换失败')
+		}
+	  })
+	})
+  })
+
+  // 修改信息
+  var update = function() {
+	layer.open({
+	  type: 2,
+	  area: ['100%', '100%'],
+	  title: "修改信息",
+	  content: "{:url('index/update')}"
+	})
+  }
+
+  	$('#parentIframe').on('click', function(){
+	    layer.open({
+	      type: 2,
+	      title:'站点信息',
+	      maxmin: true,
+	      shadeClose: true, //点击遮罩关闭层
+	      area : ['100%' , '100%'],
+	      content: '{:url("site/index")}'
+	    });
+  	});
+
+  	$(".listOrder").focus(function ()
+        {
+            layer.msg('输入一个数字来修改信息')
+            $(this).css("background-color", "#F1F1F1");
+        }
+    );
+    $(".listOrder").blur(function(){
+        var url,id,order;
+
+        layer.closeAll()
+        $(this).css("background-color", "#fff");
+        url     = "sms_edit";
+        order   = $(this).val();
+        $.ajax(
+            {
+                url : url,
+                type : 'post',
+                dataType : 'json',
+                data : 'order=' + order,
+                success : function (json)
+                {
+                    layer.msg(json.msg, { time: 1000 })
+                    setTimeout(function() {
+                        $('.close').click();
+                    },3e3);
+                },
+                error:function(xhr){          //上传失败
+
+                    layer.msg(xhr.responseText, { time: 1000 })
+                }
+            });
+    });
+
+</script>

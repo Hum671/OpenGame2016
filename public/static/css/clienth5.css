@@ -1,0 +1,53 @@
+#ysCustomerBox {
+  width: 2.4rem;
+  z-index: 999;
+  position: fixed;
+  top: 45%;
+  transform: translateY(-50%);
+}
+
+.ys-float-right {
+  right: 0;
+}
+
+.ys-float-left {
+  left: 0;
+}
+
+.ys-hidden {
+  display: none !important;
+}
+
+#ysCustomerBox .ys-float-ele {
+  background: #007AFF;
+  width: 2.4rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.57rem;
+  cursor: pointer;
+  text-align: center;
+  font-size: 12px;
+  color: white;
+  position: relative;
+  display: none;
+  border-top-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+}
+
+#ysCustomerBox .ys-kf {
+  display: block;
+}
+
+#ysCustomerBox .ys-float-ele span {
+  display: inline-block;
+  margin: 0 auto;
+  font-size: 1rem;
+  width: 1rem;
+}
+
+#ysCustomerBox .ys-float-ele span.iconfont {
+  font-size: 1.6rem;
+  padding-top: 2px;
+  display: block;
+  position: relative;
+  right: 0.3rem;
+}

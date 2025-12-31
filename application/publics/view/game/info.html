@@ -1,0 +1,86 @@
+{extend name="public:body" /}
+
+{block name="header"}
+  <div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title" style="padding:10px 0;height:30px;">
+      <li class="layui-this"><a href="{:url('admin/index')}">购买信息</a></li>
+    </ul>
+  </div>
+{/block}
+{block name="body"}
+  <div class="layui-card-body">
+    <table class="layui-table table table-hover table-bordered table-list" id="menus-table" lay-size="sm">
+      <thead>
+        <tr>
+          <th class="tc">ID</th>
+          <th class="tc">期数</th>
+          <th class="tc">购买号码</th>
+          <th class="tc">购买金额</th>
+          <th class="tc">购买时间</th>
+          <th class="tc">备注</th>
+          <th width="80" class="tc">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($list as $v){?>
+            <tr>
+                <td class="tc">{$v.id}</td>
+                <td class="tc">{$v.issue}</td>
+                <td class="tc">{$v.num}</td>
+                <td class="tc">¥{$v.amount / 100}</td>
+                <td class="tc">{$v.create_time}</td>
+                <td class="tc">{$v.remark}</td>
+                <td class="tc">
+                  <a
+                    class="a-post"
+                    style="cursor: pointer;"
+                    post-msg="删除数据不可恢复，确认删除吗？"
+                    post-url="<?php echo url('game/deleted',['id'=>$v['id']])?>"
+                  >
+                    删除
+                  </a>
+                </td>
+            </tr>
+        <?php } ?>
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td colspan="9" class="tc">
+            {$page|raw}
+            <span>共{$count}条</span>
+            <span>
+              {$limit|raw}
+            </span>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <script>
+    var url   = "/publics/game/info",
+        limit = 10
+
+    // 页面选择
+    var selectlimit = function() {
+      limit = $('[name=limit]').val()
+      window.location.href = url + "?page={$cur_page}&limit="+limit
+    }
+
+    // 搜索参数
+    var parmas = function() {
+      var obj = {
+        limit: $('[name=limit]').val(),
+      }
+
+      var string = ''
+      for (let k in obj) {
+        if (obj[k] !== undefined) {
+          string += k+'='+obj[k]+'&'
+        }
+      }
+      return string.substr(0, string.length - 1)
+    }
+  </script>
+{/block}

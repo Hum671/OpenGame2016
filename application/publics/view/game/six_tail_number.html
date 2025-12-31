@@ -1,0 +1,93 @@
+{extend name="public:body" /}
+
+{block name="header"}
+  <div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title" style="padding:10px 0;height:30px;">
+      <li class="layui-this"><a href="{:url('admin/index')}">必中六尾</a></li>
+    </ul>
+  </div>
+{/block}
+{block name="body"}
+  <div class="layui-card-body">
+    <div class="layui-form">
+      <div class="layui-form-item">
+        <a class="a-post layui-btn" onClick="onAdd()">预设六尾</a>
+      </div>
+    </div>
+
+    <table class="layui-table table table-hover table-bordered table-list" id="menus-table" lay-size="sm">
+      <thead>
+        <tr>
+          <th class="tc">ID</th>
+          <th class="tc">期数</th>
+          <th class="tc">必中六尾</th>
+          <th width="80" class="tc">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($list as $v){?>
+          <tr>
+            <td class="tc">{$v.id}</td>
+            <td class="tc">{$v.issue}</td>
+            <td class="tc">{$v.nums}</td>
+            <td class="tc">
+              <a
+                class="a-post"
+                style="cursor: pointer;"
+                post-msg="删除数据不可恢复，确认删除吗？"
+                post-url="<?php echo url('game/delete_six_tail_number',['id'=>$v['id']])?>"
+              >
+                删除
+              </a>
+            </td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    let layer;
+
+    layui.use('layer', function() {
+      layer = layui.layer;
+    });
+
+    function onAdd() {
+      layer.open({
+        type: 2,
+        title: '必中六尾',
+        offset: '100px',
+        area: ['350px', '232px'],
+        content: '{:url("game/six_tail_number_form")}',
+        btn: ['确认', '取消'],
+        yes: function(index, layero) {
+          const body = layer.getChildFrame('body', index);
+          const iframeWin = window[layero.find('iframe')[0]['name']];
+          const data = {
+            issue: body.find('[name=issue]').val(),
+            nums: body.find('[name=nums]').val(),
+          };
+
+          if (data.nums.length !== 11) {
+            layer.msg('格式错误');
+            return;
+          }
+
+          handleSubmit(data);
+          layer.close(index);
+        },
+      });
+    }
+
+    function handleSubmit(data) {
+      $.post('{:url("game/six_tail_number_form")}', data, function(json) {
+        if (json.code === 200) {
+          window.location.reload();
+        } else {
+          layer.msg(json.msg);
+        }
+      });
+    }
+  </script>
+{/block}

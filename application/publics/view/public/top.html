@@ -1,0 +1,188 @@
+<style>
+.layui-nav-child dd { cursor: pointer; }
+</style>
+
+<div class="layui-header">
+    <!-- 头部区域 -->
+    <ul class="layui-nav layui-layout-left">
+        <li class="layui-nav-item layadmin-flexible" lay-unselect>
+            <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+            </a>
+        </li>
+        <li class="layui-nav-item layui-hide-xs" lay-unselect>
+
+            <a href="/" target="_blank" title="网站首页">
+
+                <i class="layui-icon layui-icon-website"></i>
+            </a>
+        </li>
+        <li class="layui-nav-item" lay-unselect>
+            <a href="javascript:;" layadmin-event="refresh" title="刷新">
+                <i class="layui-icon layui-icon-refresh"></i>
+            </a>
+        </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+        <!-- <li class="layui-nav-item layui-hide-xs" lay-unselect title="更新缓存">
+            <a href="javascript:;" layadmin-event="theme">
+                更新缓存
+            </a>
+        </li> -->
+        <li class="layui-nav-item layui-hide-xs" lay-unselect title="便签">
+            <a href="javascript:;" layadmin-event="note">
+                <i class="layui-icon layui-icon-note"></i>
+            </a>
+        </li>
+        <li class="layui-nav-item layui-hide-xs" lay-unselect>
+            <a href="javascript:;" onclick="onFullScreen()"><i id="fullicon" class="layui-icon layui-icon-screen-full"></i></a>
+        </li>
+        <li class="layui-nav-item" lay-unselect>
+            <a href="javascript:;">
+                <cite id="username">欢迎, </cite>
+            </a>
+            <dl class="layui-nav-child">
+                <!-- <dd><a lay-href="set/user/info.html">基本资料</a></dd> -->
+                <!-- <dd><a lay-href="set/user/password.html">修改密码</a></dd> -->
+                <dd style="text-align: center;" onclick="update()">
+                    <a>修改密码</a>
+                </dd>
+                <dd style="text-align: center;" onclick="exit()">
+                    <a>退出</a>
+                </dd>
+            </dl>
+        </li>
+
+        <li class="layui-nav-item layui-hide-xs" lay-unselect>
+            <a href="javascript:;"><i class="layui-icon layui-icon-more-vertical"></i></a>
+        </li>
+    </ul>
+</div>
+
+<script>
+    var isFull = false
+
+    // 获取用户名
+    $.get('{:url("index/get_username")}', function (res) {
+        $('#username').html('欢迎, ' + res.msg)
+    })
+
+    // 退出
+    var exit = function() {
+        layer.confirm('确认退出账号？', function(idx) {
+            layer.closeAll();
+            layer.load(2)
+            $.get('{:url("login/logout")}', function() {
+                layer.closeAll()
+                layer.msg('账号退出成功', { icon: 6, time: 1200 }, function() {
+                    window.location.href = '{:url("/publics/login")}'
+                })
+            })
+        });
+    }
+
+    // 修改密码
+    var update = function() {
+        var html = '<div class="layui-form-item">'
+            html += '<input type="password" name="n-password" placeholder="请输入新的密码" class="layui-input"></div>'
+            html += '<div class="layui-form-item">'
+            html += '<input type="password" name="c-password" placeholder="请再次输入密码" class="layui-input"></div>'
+
+        layer.open({
+            title: '修改密码',
+            content: html,
+            yes: function() {
+                layer.closeAll()
+                var u = '{:url("admin/updatePass")}',
+                    d = {
+                        login_pass: $('[name=n-password]').val(),
+                        login_pass_2: $('[name=c-password]').val()
+                    }
+
+                if ($('[name=n-password]').val() != $('[name=c-password]').val()) {
+                    layer.msg('输入两次密码不一致', { icon: 5, time: 1500 })
+                    return false;
+                }
+
+                // 密码一致
+                layer.load(2)
+                $.post(u, d, function(res) {
+                    layer.closeAll()
+                    if (res.code == 200) {
+                        layer.msg('密码修改成功', { icon: 6, time: 1500 }, function() {
+                            window.location.reload()
+                        })
+                        return true
+                    }
+
+                    layer.msg('密码修改失败', { icon: 5, time: 1500 })
+                })
+            }
+        })
+    }
+
+    // 更多
+    var more = function () {
+        layer.open({
+          type: 1,
+          content: '传入任意的文本或html',
+          area: ['300px', 'calc(100vh - 51px)'],
+          offset: 'rb',
+          resize: false,
+          move: false,
+          anim: -1,
+          isOutAnim: false
+        })
+    }
+
+    //全屏
+    function fullScreen() {
+        var element = document.documentElement
+        if (element.requestFullscreen) {
+            element.requestFullscreen()
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen()
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen()
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen()
+        }
+    }
+
+    //退出全屏
+    function exitFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen()
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen()
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen()
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen()
+        }
+    }
+
+    //监听window是否全屏，并进行相应的操作,支持esc键退出
+    window.onresize = function() {
+        isFull=!!(document.webkitIsFullScreen || document.mozFullScreen ||
+            document.msFullscreenElement || document.fullscreenElement
+        )
+
+        if (isFull) {
+            $("#fullicon").removeClass('layui-icon-screen-full')
+            $("#fullicon").addClass('layui-icon-screen-restore')
+        }else{
+            $("#fullicon").removeClass('layui-icon-screen-restore')
+            $("#fullicon").addClass('layui-icon-screen-full')
+        }
+    }
+
+    // 全屏
+    var onFullScreen = function () {
+        if (!isFull) {
+            fullScreen()
+        } else {
+            exitFullscreen()
+        }
+    }
+</script>

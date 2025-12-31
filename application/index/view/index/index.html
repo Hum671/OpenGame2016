@@ -1,0 +1,16 @@
+{extend name="public:base" /}
+
+{block name="keywords"}{$keywords}{/block}
+{block name="description"}{$description}{/block}
+
+{block name="body"}
+  {include file="components:kj"}
+  {include file="components:history"}
+
+  <script>
+    const sites = document.getElementsByClassName('site');
+    for (let i = 0; i < sites.length; i++) {
+      sites[i].innerText = window.location.hostname;
+    }
+  </script>
+{/block}

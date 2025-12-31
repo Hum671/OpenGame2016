@@ -1,0 +1,73 @@
+{extend name="public:body" /}
+
+{block name="header"}
+  <div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title" style="padding:10px 0;height:30px;">
+      <li>管理员日志</li>
+    </ul>
+  </div>
+{/block}
+{block name="body"}
+  <style>
+    .fright {
+      float: right;
+    }
+  </style>
+
+  <div class="layui-card-body">
+    <div class="layui-form">
+      <div class="layui-form-item">
+        <a class="a-post layui-btn" style="cursor: pointer;" post-msg="清空日志后不可恢复，确认清空吗？" post-url="<?php echo url('system/clearlog')?>">清空日志</a>
+      </div>
+    </div>
+
+    <table class="layui-table table table-hover table-bordered table-list" id="menus-table" lay-size="sm">
+      <thead>
+        <tr>
+          <th class="tc">ID</th>
+          <th class="tc">标题</th>
+          <th class="tc">用户</th>
+          <th class="tc">日志URL</th>
+          <th class="tc">日志详情</th>
+          <th class="tc">IP</th>
+          <th class="tc" width="120">执行时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($list as $v){?>
+          <tr>
+            <td class="tc">{$v.id}</td>
+            <td class="tc">{$v.title}</td>
+            <td class="tc">{$v.username}</td>
+            <td class="tc">{$v.log_url}</td>
+            <td class="tc">{$v.log}</td>
+            <td class="tc">{$v.action_ip|long2ip}</td>
+            <td class="tc">{$v.create_time|date='Y-m-d H:i:s'}</td>
+          </tr>
+        <?php } ?>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="9" class="tc">
+            {$page|raw}
+            <span>共{$count}条</span>
+            <span>
+              {$limit|raw}
+            </span>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <script>
+    var url   = "/publics/system/log",
+        limit = 10
+
+    // 页面选择
+    var selectlimit = function() {
+      limit = $('[name=limit]').val()
+      window.location.href = url + "&page={$cur_page}&limit="+limit
+    }
+  </script>
+{/block}

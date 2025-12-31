@@ -1,0 +1,82 @@
+#ysCustomerBox {
+  width: 60px;
+  z-index: 999;
+  position: fixed;
+  top: 45%;
+  transform: translateY(-50%);
+}
+
+.ys-float-right {
+  right: 10px;
+}
+
+.ys-float-left {
+  left: 10px;
+}
+
+.ys-hidden {
+  display: none !important;
+}
+
+#ysCustomerBox .ys-float-ele {
+  background: #007AFF;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 12px;
+  color: white;
+  position: relative;
+}
+
+#ysCustomerBox .ys-float-ele:hover {
+  background: #2f90f9;
+}
+
+#ysCustomerBox .ys-phone:hover .ys-phone-number,
+#ysCustomerBox .ys-wx:hover .ys-wx-qrcode {
+  display: block;
+}
+
+#ysCustomerBox .ys-phone-number,
+#ysCustomerBox .ys-wx-qrcode {
+  position: absolute;
+  padding: 3px;
+  width: 120px;
+  right: 65px;
+  bottom: 8px;
+  color: #007aff;
+  font-size: 16px;
+  text-align: center;
+  border: 1px solid #007aff;
+  font-weight: bold;
+  border-radius: 5px;
+  display: none;
+  background: white;
+}
+
+#ysCustomerBox.ys-float-left .ys-phone-number,
+#ysCustomerBox.ys-float-left .ys-wx-qrcode {
+  left: 65px;
+}
+
+#ysCustomerBox .ys-wx-qrcode {
+  border-radius: 0;
+  border-color: #ccc;
+  height: 120px;
+  top: 0;
+}
+
+#ysCustomerBox .ys-float-ele span {
+  display: block;
+}
+
+#ysCustomerBox .ys-float-ele span.iconfont {
+  font-size: 32px;
+  padding-top: 2px;
+}
+
+@media screen and (max-width: 1200px) {
+}

@@ -1,0 +1,127 @@
+{extend name="public:body" /}
+
+{block name="header"}
+  <div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title" style="padding:10px 0;height:30px;">
+      <li class="layui-this"><a href="#">新增购买六合彩</a></li>
+    </ul>
+  </div>
+{/block}
+
+{block name="body"}
+  <style>
+    .info {
+      font-size: 16px;
+      padding: 10px 0;
+    }
+    .info span {
+      color: #FF5722;
+      margin-right: 20px;
+    }
+    .number-grid {
+      margin-top: 5px;
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      grid-gap: 10px;
+      font-size: 20px;
+      padding-bottom: 10px;
+    }
+    .number-grid .item {
+      height: 80px;
+      text-align: center;
+      background-color: #e5e5e5;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .number-grid .item .amount {
+      font-size: 14px;
+      color: #FF5722;
+    }
+    .number-grid .item .not-buy {
+      font-size: 14px;
+      color: #666;
+    }
+    @media screen and (max-width: 768px) {
+      .number-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+    .layui-form-item {
+      margin-top: 20px;
+    }
+  </style>
+
+  <form class="form-horizontal" action="" method="post">
+    <div class="info">
+      当前期数：<span>{$issue}</span>
+      购买总额：<span>¥ {$buy_total_amount}</span>
+    </div>
+
+    <div class="number-grid">
+      {volist name="grid" id="vo"}
+        <div class="item" onClick="onBuy({$i})">
+          <div>{$vo.num}</div>
+          <div class="amount {$vo.total_amount === '0.00' ? 'not-buy' : ''}">¥{$vo.total_amount}</div>
+        </div>
+      {/volist}
+    </div>
+  </form>
+
+  <script>
+    let layer;
+
+    layui.use('layer', function() {
+      layer = layui.layer;
+    });
+
+    window.addEventListener('keydown', function(ev) {
+      if (ev.keyCode === 13 && document.getElementsByClassName('layui-layer-btn0')) {
+        document.getElementsByClassName('layui-layer-btn0')[0].click();
+      }
+    }, true);
+
+    window.addEventListener('message', function(ev) {
+      if (document.getElementsByClassName('layui-layer-btn0')) {
+        document.getElementsByClassName('layui-layer-btn0')[0].click();
+      }
+    });
+
+    // 输入
+    function onBuy(number) {
+      layer.open({
+        type: 2,
+        title: '购买号码',
+        offset: '150px',
+        area: ['300px', '232px'],
+        content: '{:url("game/form")}',
+        btn: ['确认', '取消'],
+        yes: function(index, layero) {
+          const body = layer.getChildFrame('body', index);
+          const iframeWin = window[layero.find('iframe')[0]['name']];
+          const data = {
+            amount: body.find('[name=amount]').val(),
+            remark: body.find('[name=remark]').val(),
+            num: number,
+            issue: '{$issue}',
+          };
+          handleSubmit(data);
+          layer.close(index);
+        },
+      });
+    }
+
+    // 提交购买信息
+    function handleSubmit(data) {
+      $.post('{:url("game/add")}', data, function(json) {
+        if (json.code === 200) {
+          window.location.reload();
+        } else {
+          layer.msg(json.msg);
+        }
+      });
+    }
+  </script>
+{/block}

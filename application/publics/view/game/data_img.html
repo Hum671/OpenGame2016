@@ -1,0 +1,81 @@
+{extend name="public:body" /}
+
+{block name="header"}
+  <div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title" style="padding:10px 0;height:30px;">
+      <li class="layui-this"><a href="{:url('admin/index')}">图片资料</a></li>
+    </ul>
+  </div>
+{/block}
+{block name="body"}
+  <style>
+    .grid {}
+    .grid .imgbox {
+      width: 300px;
+      text-align: center;
+      border: 1px solid #e5e9ee;
+      cursor: pointer;
+    }
+    .grid .imgbox img {
+      width: 100%;
+      background-color: #f5f6f7;
+      height: 300px;
+    }
+  </style>
+
+  <div class="layui-card-body">
+    <div class="layui-form">
+      <div class="layui-form-item">
+        <span style="margin-right: 15px">当前期数：{$issue}</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="imgbox" id="sibuxiang">
+        <div class="title">四不像(点击上传)</div>
+        <img src="{$sibuxiang}" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const issue = "{$issue}";
+
+    layui.use('upload', function(){
+      const upload = layui.upload;
+
+      //执行实例
+      const uploadInst = upload.render({
+        elem: '#sibuxiang',
+        url: "{:url('/publics/upload/attach')}",
+        data: {
+          type: 'image',
+        },
+        done: function(res) {
+          if (res.code !== 200) {
+            layer.msg(res.msg);
+          } else {
+            handleSubmit({
+              name: issue + "_sibuxiang",
+              value: res.path,
+            });
+          }
+        },
+        error: function() {
+          layer.msg('上传失败');
+        },
+      });
+    });
+
+    // 提交
+    function handleSubmit(data) {
+      $.post('{:url("game/data_img")}', data, function(json) {
+        if (json.code === 200) {
+          window.location.reload();
+        } else {
+          layer.msg(json.msg);
+        }
+      });
+    }
+  </script>
+{/block}

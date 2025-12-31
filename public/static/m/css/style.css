@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+li, ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  color: #666;
+  max-width: 100%;
+  background-color: white;
+  font-family: sans-serif;
+  font-weight: 400;
+}
+
+.p__10 {
+  padding: 0.5rem;
+}
+
+.mt__10 {
+  margin-top: 0.5rem;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}

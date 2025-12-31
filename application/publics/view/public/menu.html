@@ -1,0 +1,68 @@
+<div class="layui-side layui-side-menu" id="menu">
+  <div class="layui-side-scroll">
+    <div class="layui-logo">
+      <span>{$Think.config.app_name}</span>
+    </div>
+
+    {php}
+      use thinkcms\auth\Auth;
+      use thinkcms\auth\library\Tree;
+
+      $menu = Auth::menuCheck();
+      $tree = new Tree();
+
+      // 菜单结构
+      $new_menu = [];
+      $count = 0;
+      foreach ($menu as $k => &$v) {
+          $url = $v['url_param'] ? '?'.$v['url_param'] : '';
+          $v['url'] = '/'.$v['app'].'/'.$v['model'].'/'.$v['action'].$url;
+          $v['icon'] = $v['icon'] ? $v['icon'] : 'layui-icon-triangle-r';
+          $v['level'] = $tree->get_level($v['id'], $menu);
+      }
+
+      $tree->init($menu);
+      foreach ($menu as $key => $value) {
+          if ($value['level'] == 1) {
+              $value['children'] = $tree->get_child($value['id']);
+              $new_menu[$count++] = $value;
+          }
+      }
+    {/php}
+
+    <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+      {foreach $new_menu as $k => $v}
+      <li
+        data-name="{$v.name}"
+        class="layui-nav-item">
+        {if $v.children == false}
+        <a
+          lay-tips="{$v.name}"
+          lay-href="{$v.url}"
+          lay-direction="2">
+          <i class="layui-icon {$v.icon}"></i>
+          <cite>{$v.name}</cite>
+        </a>
+        {else /}
+        <a
+          lay-tips="{$v.name}"
+          href="javascript:;">
+          <i class="layui-icon {$v.icon}"></i>
+          <cite>{$v.name}</cite>
+        </a>
+        <dl class="layui-nav-child">
+          {foreach $v['children'] as $ck => $cv}
+          <dd>
+            <a
+              lay-href="{$cv.url}">
+              {$cv.name}
+            </a>
+          </dd>
+          {/foreach}
+        </dl>
+        {/if}
+      </li>
+      {/foreach}
+    </ul>
+  </div>
+</div>

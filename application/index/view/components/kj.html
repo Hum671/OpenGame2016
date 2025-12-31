@@ -1,0 +1,58 @@
+<div class="box pad">
+  <style>
+    .KJ-TabBox { overflow: hidden; color:#333; background: #fff; font-family: 'PingFang SC', 'microsoft yahei', arial, 'helvetica neue', 'hiragino sans gb', sans-serif;}
+    .KJ-TabBox ul,.KJ-TabBox li{margin:0;list-style:none;padding:0;border:0;font-size: 18px;}
+    .KJ-TabBox ul { display: flex; height: 36px; padding: 8px 0 0 8px; box-sizing: border-box; border-bottom: solid 2px #FFF;}
+    .KJ-TabBox li{ flex: 1; height: 26px; line-height: 26px; margin-right: 8px; text-align: center; border-radius: 4px; background: #eee; cursor: pointer;}
+    .KJ-TabBox li.cur{ color: #fff; background: #FF9900;}
+    .KJ-TabBox li:nth-child(1).cur { background: #E71607;}
+    .KJ-TabBox li:nth-child(2).cur { background: #1FB61D;}
+    .KJ-TabBox li:nth-child(3).cur { background: #2389E9;}
+    .KJ-TabBox li:nth-child(4).cur { background: #B907C1;}
+    .KJ-TabBox div{display:none;}
+    .KJ-TabBox div.cur{display:block!important;}
+    @media screen and (max-width: 650px) {
+      .KJ-TabBox ul,.KJ-TabBox li { font-size: 16px;}
+    }
+
+    .red {
+      color: rgb(216, 0, 17);
+    }
+    .title {
+      display: flex;
+      background-color: #ffc9c9;
+      border: 0.1px solid #d80011;
+      padding: 10px;
+      height: 38px;
+      border-radius: 5px;
+      justify-content: space-between;
+    }
+    .title .l {
+      font-size: 18px;
+      line-height: 38px;
+      font-weight: 700;
+    }
+    .title .r {
+      text-align: right;
+    }
+
+    .cur {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+  </style>
+
+  <div class="title">
+    <div class="l">新澳门六合彩(官方版)</div>
+    <div class="r">
+      <div>开奖时间 第 <span class="red">{$current_issue}</span> 期</div>
+      <div class="red">{$date.bdate ??  '??-??-??'} 22:31:32 {$date.week ?? '???'}</div>
+    </div>
+  </div>
+
+  <div class="KJ-TabBox">
+    <div class="cur">
+      <iframe class="KJ-IFRAME" src="{:url('game')}" width="100%" height="130" frameborder="0" scrolling="no"></iframe>
+    </div>
+  </div>
+</div>

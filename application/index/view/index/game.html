@@ -1,0 +1,236 @@
+<style>
+.new-KJ-TabBox-box {
+  font-size: 16px;
+  height: 130px;
+  box-sizing: border-box;
+  color: #333;
+  padding: 8px;
+  font-family: 'PingFang SC', 'microsoft yahei', arial, 'helvetica neue', 'hiragino sans gb', sans-serif;
+}
+.new-KJ-TabBox-box-tit {
+  display: flex;
+  align-items: center;
+  height: 17px;
+  line-height: 17px;
+  font-size: 17px;
+}
+.new-KJ-TabBox-box .kj-font-red {
+  color: #f00!important;
+}
+.new-KJ-TabBox-box-tit-m {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+}
+.new-KJ-TabBox-box-con {
+  display: flex;
+  margin: 8px 0;
+}
+.new-KJ-TabBox-box-con .kj-ball {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 61px;
+  width: 95%;
+  text-align: center;
+  border-radius: 4px;
+  margin-right: 6px;
+  box-sizing: border-box;
+  flex-direction: column;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: black;
+}
+.new-KJ-TabBox-box-con .kj-ball h2 {
+  margin: 0;
+  padding: 0;
+  color: #000;
+  line-height: 24px;
+  font-size: 28px;
+  font-weight: 900;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+.new-KJ-TabBox-box-con .kj-add {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+  font-size: 32px;
+  font-weight: bold;
+}
+.new-KJ-TabBox-box-con .whsx {
+  display: inline-block;
+  height: 19px;
+  line-height: 19px;
+  padding: 0 6px;
+  border-radius: 2px;
+  color: #333;
+  font-size: 18px;
+  font-weight: 700;
+}
+.new-KJ-TabBox-box-foot {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+.new-KJ-TabBox-box-foot-l {
+  flex: 1;
+}
+.new-KJ-TabBox-box-foot-r-sx {
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  color: #fff;
+  border-radius: 4px;
+  background: #FF9900;
+}
+@media screen and (max-width: 650px) {
+  .new-KJ-TabBox-box {
+    font-size: 14px;
+    padding: 0;
+    padding-top: 4px;
+  }
+  .new-KJ-TabBox-box-con .kj-ball {
+    margin-right: 4px;
+  }
+  .new-KJ-TabBox-box-con .kj-ball:nth-last-child(3) {
+    margin-right: 4px;
+  }
+  .new-KJ-TabBox-box-con .kj-add {
+    font-size: 24px;
+    margin-right: 4px;
+  }
+  .new-KJ-TabBox-box-con .kj-ball:last-child {
+    margin-right: 0;
+  }
+  .new-KJ-TabBox-box-con .kj-ball .whsx {
+    margin-top: 8px;
+    padding: 0 2px;
+    font-size: 12px;
+  }
+}
+.kj-lotto-tit2 {
+    text-align: left;
+}
+.f {
+    border: 1px solid #d0d0d0;
+    margin-right: 5px;
+    padding: 0 5px;
+    font-weight: 500;
+    font-size: 18px;
+}
+.hd, .new-KJ-TabBox-box-tit-r a, .cb {
+    font-size: 14px;
+    margin-right: 5px;
+}
+.hd {
+    display: inline-block;
+    background: #cc9801;
+    color: #fff;
+    padding: 1px 2px;
+    border-radius: 4px;
+    font-weight: 600;
+    box-shadow: inset 0 0 3px 2px #f7cd54;
+    border: 1px solid #ddd;
+}
+.cb {
+    display: inline-block;
+    font-style: normal;
+    padding: 0 7px;
+    color: #fff;
+    background: #d21e1e;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 5px;
+}
+.kj-box {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+}
+.kj-ball {
+    height: 50px;
+}
+</style>
+
+<div class="new-KJ-TabBox-box">
+  <div class="new-KJ-TabBox-box-tit">
+    <div class="new-KJ-TabBox-box-tit-m">
+      <div class="kj-lotto-tit2"><span></span>
+        <span>
+          <strong id="hour_show">
+            <span class="f">0</span><span class="f">0</span>
+          </strong>:
+          <strong id="minute_show">
+            <span class="f">0</span><span class="f">0</span>
+          </strong>:
+          <strong id="second_show">
+            <span class="f">0</span><span class="f">0</span>
+          </strong>
+        </span>
+      </div>
+    </div>
+    <div class="hd">官方核對</div>
+    <div class="new-KJ-TabBox-box-tit-r"><a target="_blank" href="{:url('history')}" class="kj-font-red"> 开奖历史 </a></div>
+    <div class="red"> > </div>
+    <div class="cb">重播</div>
+  </div>
+
+  <div class="new-KJ-TabBox-box-con">
+    {for start="1" end="8"}
+      {if $i === 7}
+        <div class="kj-add">+</div>
+      {/if}
+      <div class="kj-box">
+        <div
+          id="w{$i}"
+          class="kj-ball box m0"
+          style="background-image: url(/static/imgs/ball-{$result[$nums[$i - 1].'_color'] ?? 'red'}.png);"
+        >
+          <h2><div id="m{$i}">{$result[$nums[$i - 1]] ?? '??'}</div></h2>
+        </div>
+        <div id="m{$i}x" class="whsx">{$result[$nums[$i - 1].'_animal_sign'] ?? '??'}</div>
+      </div>
+    {/for}
+  </div>
+</div>
+
+<script>
+  const hourShow = document.getElementById('hour_show');
+  const minuteShow = document.getElementById('minute_show');
+  const secondShow = document.getElementById('second_show');
+
+  const currentTimestamp = new Date().getTime();
+  const today = new Date();
+  today.setHours(22, 32, 0, 0);
+  const drawTimestamp =  today.getTime();
+  let time = drawTimestamp - currentTimestamp;
+  let count = 0;
+
+  const timer = setInterval(function() {
+    if (time > 0) {
+      const hour = Math.floor(time / 1000 / 60 / 60 % 24);
+      const minute = Math.floor(time / 1000 / 60 % 60);
+      const second = Math.floor(time / 1000 % 60);
+
+      const h = String(hour < 10 ? '0' + hour : hour);
+      const m = String(minute < 10 ? '0' + minute : minute);
+      const s = String(second < 10 ? '0' + second : second);
+      hourShow.innerHTML = '<span class="f">'+ h.split('')[0] +'</span>' + '<span class="f">'+ h.split('')[1] +'</span>';
+      minuteShow.innerHTML = '<span class="f">'+ m.split('')[0] +'</span>' + '<span class="f">'+ m.split('')[1] +'</span>';
+      secondShow.innerHTML = '<span class="f">'+ s.split('')[0] +'</span>' + '<span class="f">'+ s.split('')[1] +'</span>';
+    }
+
+    time -= 1000;
+    count++;
+    if (time < 0) {
+      if (Number("{$is_refrsh}") === 1 && count >= 30) {
+        clearInterval(timer);
+        window.location.reload();
+      }
+    }
+  }, 1000);
+</script>

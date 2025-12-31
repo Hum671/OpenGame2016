@@ -1,0 +1,128 @@
+{extend name="public:body" /}
+
+{block name="header"}
+  <div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title" style="padding:10px 0;height:30px;">
+      <li class="layui-this"><a href="{:url('system/general')}">常规设置</a></li>
+      {if checkPath('system/about')}
+      <li><a href="{:url('system/about')}">关于我们</a></li>
+      {/if}
+      {if checkPath('system/contract')}
+      <li><a href="{:url('system/contract')}">合同模版</a></li>
+      {/if}
+    </ul>
+  </div>
+{/block}
+{block name="body"}
+<style>
+  .label-btn:hover {
+    text-decoration: line-through;
+    color: red;
+    border-color: red;
+  }
+</style>
+
+<div class="layui-card-body">
+  <form class="form-horizontal" action="{:url('general')}" method="post">
+    <table class="layui-table table-form" id="menus-table" lay-size="sm">
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>内容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>问题标签</td>
+          <td>
+            <span id="label-container"></span>
+            <input type="text" name="question_tags" value="{$question_tags ?? ''}">
+          </td>
+        </tr>
+        <tr>
+          <td>轮播图</td>
+          <td>
+            <input type="text" name="swiper_imgs" value="{$swiper_imgs ?? ''}">
+            <button
+              style="margin-left: 8px"
+              id="swiper_imgs_btn"
+              type="button"
+              class="layui-btn layui-btn-sm">上传</button>
+          </td>
+        </tr>
+        <tr>
+          <td>轮播图功能</td>
+          <td>
+            <input type="text" name="swiper_func" value="{$swiper_func ?? ''}">
+          </td>
+        </tr>
+        <tr>
+          <td>业务员端版本</td>
+          <td>
+            <input type="text" name="salesman_version" value="{$salesman_version ?? ''}">
+          </td>
+        </tr>
+        <tr>
+          <td>统计/代码</td>
+          <td>
+            <textarea name="site_code">{$site_code ?? ''}</textarea>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <button type="button" class="layui-btn btn-primary layui-btn-sm ajax-post-no">
+              保存
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+
+<script>
+var tags = "{$question_tags ?? ''}"
+
+layui.use('upload', function(){
+  var upload = layui.upload
+
+  var uploadInst = upload.render({
+    elem: '#uploads',
+    url: "{:url('/uploads')}",
+    data: { type: 'site' },
+    field: 'file',
+    done: function(res) {
+      if (res.code === 0) {
+        $('[name=site_logo]').val(res.data.src)
+      } else {
+        layer.msg('上传失败', {icon: 5})
+      }
+    },
+    error: function() {
+    }
+  })
+
+  var uploadImgs = upload.render({
+    elem: '#swiper_imgs_btn',
+    url: "{:url('/uploadToAttach')}",
+    data: { type: 'image' },
+    field: 'file',
+    done: function(res) {
+      if (res.code === 200) {
+        var idInput = $('[name=swiper_imgs]')
+        if (idInput.val().length <= 0) {
+          idInput.val(res.id)
+        } else {
+          idInput.val(idInput.val()+','+res.id)
+        }
+
+      } else {
+        layer.msg('上传失败', {icon: 5, offset: '200px'})
+      }
+    },
+    error: function() {}
+  })
+})
+</script>
+{/block}

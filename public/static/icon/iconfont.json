@@ -1,0 +1,44 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "351749",
+      "name": "返回顶部",
+      "font_class": "fanhuidingbu",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "1312064",
+      "name": "信息",
+      "font_class": "xinxi",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "6366900",
+      "name": "二维码",
+      "font_class": "erweima",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "10055798",
+      "name": "注册",
+      "font_class": "zhuce",
+      "unicode": "e6b5",
+      "unicode_decimal": 59061
+    },
+    {
+      "icon_id": "11810462",
+      "name": "电话",
+      "font_class": "dianhua",
+      "unicode": "e681",
+      "unicode_decimal": 59009
+    }
+  ]
+}
