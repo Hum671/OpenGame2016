@@ -183,7 +183,7 @@ class Index extends Base
                 $result[$nums[$i] . '_color'] = GameService::get_color_by_number_1($result[$nums[$i]]);
                 $result[$nums[$i]] = sprintf('%02d', $result[$nums[$i]]);
             }
-            $result['issue_name'] = $result['issue'];
+            $result['issue_name'] = str_replace(date('Y'), '', $result['issue']);
             $result['date'] = GameService::get_open_date_by_issue($result['issue']);
         }
 

@@ -171,9 +171,7 @@ class GameService
         $year = substr($issue, 0, 4);
         $number_issue = substr($issue, 4, 7);
         
-        if ((int)$number_issue < 29) {
-            $year = $year - 1;
-        }
+        $year = self::get_nl_year($year, $number_issue);
         
         $mark_six_animal_sign = self::get_mark_six_animal_sign_sequence($year); // 6合彩顺序
         return $mark_six_animal_sign[($number - 1) % 12];
@@ -190,9 +188,7 @@ class GameService
         $year = substr($issue, 0, 4);
         $number_issue = substr($issue, 4, 7);
 
-        if ((int)$number_issue < 29) {
-            $year = $year - 1;
-        }
+        $year = self::get_nl_year($year, $number_issue);
 
         // 2024
         $gold = [1, 2, 9, 10, 23, 24, 31, 32, 39, 40]; // 金
@@ -201,7 +197,20 @@ class GameService
         $fire = [7, 8, 15, 15, 29, 30, 37, 38, 45, 46]; // 火
         $earth = [3, 4, 17, 18, 25, 26, 33, 34, 47, 48]; // 土
 
-        if ($year == '2025' || $year == '2026') {
+        if ($year == '2025') {
+            $gold = [3, 4, 11, 12, 25, 26, 33, 34, 41, 42]; // 金
+            $wood = [7, 8, 15, 16, 23, 24, 37, 38, 45, 46]; // 木
+            $water = [13, 14, 21, 22, 29, 30, 43, 44]; // 水
+            $fire = [1, 2, 9, 10, 17, 18, 31, 32, 39, 40, 47, 48]; // 火
+            $earth = [5, 6, 19, 20, 27, 28, 35, 36, 49]; // 土
+        }
+        if ($year == '2026') {
+//            $gold = []; // 金
+//            $wood = []; // 木
+//            $water = []; // 水
+//            $fire = []; // 火
+//            $earth = []; // 土
+
             $gold = [3, 4, 11, 12, 25, 26, 33, 34, 41, 42]; // 金
             $wood = [7, 8, 15, 16, 23, 24, 37, 38, 45, 46]; // 木
             $water = [13, 14, 21, 22, 29, 30, 43, 44]; // 水
@@ -735,5 +744,19 @@ class GameService
             return $model->all();
         }
         return $model->page(1, 5)->all();
+    }
+
+    /**
+     * 获取农历的年
+     */
+    public static function get_nl_year($year, $number_issue)
+    {
+        if ($year == 2025 && (int)$number_issue < 29) {
+            $year = $year - 1;
+        }
+        if ($year == 2026 && (int)$number_issue < 48) {
+            $year = $year - 1;
+        }
+        return $year;
     }
 }
